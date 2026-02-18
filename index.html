@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Love</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: cursive;
+
+    /* Fondo verde con dinosaurios */
+    background-color: #c9f7d4;
+    background-image:url("https://dino.jpg");
+    background-repeat: repeat;
+    background-size: 100px;
+}
+
+.love {
+    position: absolute;
+    font-size: 26px;
+    font-weight: bold;
+    animation: fall linear infinite;
+    opacity: 0.95;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 8px white, 0 0 18px #ffb6c1;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-60px);
+    }
+    to {
+        transform: translateY(110vh);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+const messages = [
+  "Te amo muchísimo 💖",
+  "Te amo muchísimo 🦖",
+  "Te amo muchísimo 🦕",
+  "Te amo muchísimo 💕",
+  "Te amo muchísimo 💘"
+];
+
+const colors = ["#ff4f9a", "#ff7eb6", "#ff9fcf", "#ff6fae", "#ff85c2"];
+
+function createLove() {
+    const love = document.createElement("div");
+    love.className = "love";
+    love.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+    love.style.left = Math.random() * window.innerWidth + "px";
+    love.style.color = colors[Math.floor(Math.random() * colors.length)];
+    love.style.fontSize = (Math.random() * 18 + 22) + "px";
+
+    const duration = Math.random() * 6 + 6;
+    love.style.animationDuration = duration + "s";
+
+    document.body.appendChild(love);
+
+    setTimeout(() => {
+        love.remove();
+    }, duration * 1000);
+}
+
+setInterval(createLove, 220);
+</script>
+
+</body>
+</html>
