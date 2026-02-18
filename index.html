@@ -2,39 +2,44 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Love</title>
+<title>index</title>
 
 <style>
 body {
     margin: 0;
     overflow: hidden;
     font-family: cursive;
-
-    /* Fondo verde con dinosaurios */
-    background-color: #c9f7d4;
-    background-image:url("https://dino.jpg");
-    background-repeat: repeat;
-    background-size: 100px;
+    background-color: #1C3D6E;
 }
 
+/* Stickers flotando */
+.sticker {
+    position: absolute;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* Animación flotante */
+@keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Lluvia de texto */
 .love {
     position: absolute;
-    font-size: 26px;
-    font-weight: bold;
+    font-size: 24px;
+    color:#fff7ee;
     animation: fall linear infinite;
-    opacity: 0.95;
-    user-select: none;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
     pointer-events: none;
-    text-shadow: 0 0 8px white, 0 0 18px #ffb6c1;
 }
 
 @keyframes fall {
-    from {
-        transform: translateY(-60px);
-    }
-    to {
-        transform: translateY(110vh);
-    }
+    from { transform: translateY(-50px); }
+    to { transform: translateY(110vh); }
 }
 </style>
 </head>
@@ -42,15 +47,44 @@ body {
 <body>
 
 <script>
-const messages = [
-  "Te amo muchísimo 💖",
-  "Te amo muchísimo 🦖",
-  "Te amo muchísimo 🦕",
-  "Te amo muchísimo 💕",
-  "Te amo muchísimo 💘"
-];
+// Stickers que flotan por la pantalla
+const stickers = ["⭐","🦕"];
+let stickerElements = [];
 
-const colors = ["#ff4f9a", "#ff7eb6", "#ff9fcf", "#ff6fae", "#ff85c2"];
+function placeStickers() {
+    // borrar anteriores
+    stickerElements.forEach(s => s.remove());
+    stickerElements = [];
+
+    const count = 22; // menos cantidad = más espacio
+
+    for (let i = 0; i < count; i++) {
+        const s = document.createElement("div");
+        s.className = "sticker";
+        s.textContent = stickers[Math.floor(Math.random() * stickers.length)];
+
+        s.style.left = Math.random() * window.innerWidth + "px";
+        s.style.top = Math.random() * window.innerHeight + "px";
+        s.style.fontSize = (Math.random() * 25 + 25) + "px";
+        s.style.animationDuration = (Math.random() * 4 + 6) + "s";
+
+        document.body.appendChild(s);
+        stickerElements.push(s);
+    }
+}
+
+// colocarlos al inicio y cuando cambie el tamaño
+placeStickers();
+window.addEventListener("resize", placeStickers);
+
+// Lluvia de amor
+const messages = [
+  "Te amo muchísimo muchachito 💖",
+  "Estoy muy orgullosa de ti 🎀",
+  "Eres mi vida entera 🦕",
+  "Te amo demasiado 💕",
+  "Te amo muchísimo ⭐"
+];
 
 function createLove() {
     const love = document.createElement("div");
@@ -58,20 +92,13 @@ function createLove() {
     love.textContent = messages[Math.floor(Math.random() * messages.length)];
 
     love.style.left = Math.random() * window.innerWidth + "px";
-    love.style.color = colors[Math.floor(Math.random() * colors.length)];
-    love.style.fontSize = (Math.random() * 18 + 22) + "px";
-
-    const duration = Math.random() * 6 + 6;
-    love.style.animationDuration = duration + "s";
+    love.style.animationDuration = (Math.random() * 5 + 5) + "s";
 
     document.body.appendChild(love);
-
-    setTimeout(() => {
-        love.remove();
-    }, duration * 1000);
+    setTimeout(() => love.remove(), 10000);
 }
 
-setInterval(createLove, 220);
+setInterval(createLove, 350);
 </script>
 
 </body>
